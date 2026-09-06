@@ -6,7 +6,7 @@
   "author": "",
   "license": "MIT",
   "description": "A blurred copy of the current wallpaper, drawn above the real background and beneath every window and widget.",
-  "repository": "https://github.com/YOUR_USERNAME/omarchy-wallpaper-blur",
+  "repository": "https://github.com/maiosx/omarchy-wallpaper-blur",
   "keywords": ["wallpaper", "blur", "desktop", "quickshell"],
   "kinds": ["panel"],
   "keepLoaded": true,
