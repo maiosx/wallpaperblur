@@ -13,14 +13,14 @@ the real background, beneath every window and every other widget.
 ## Install
 
 ```bash
-omarchy plugin add https://github.com/maiosx/omarchy-wallpaper-blur.git
+omarchy plugin add https://github.com/maiosx/wallpaperblur.git
 omarchy plugin enable wallpaper.blur
 ```
 
 Or let the install script do both and restart the shell for you:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/maiosx/omarchy-wallpaper-blur/main/install | bash -s -- --yes
+curl -fsSL https://raw.githubusercontent.com/maiosx/wallpaperblur/main/install | bash -s -- --yes
 ```
 
 > **`omarchy plugin add` does not upgrade.** It refuses when the plugin is
