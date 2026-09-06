@@ -7,8 +7,8 @@ import Quickshell.Wayland
 // One layer-shell surface per output, each showing a blurred copy of the
 // current wallpaper image.
 //
-// It sits on the Bottom layer, above the real wallpaper and beneath every
-// window (the same layer omarchy-widgets uses for its desktop cards) —
+// It sits on the Background layer (one step below Bottom), so it lives under
+// the real wallpaper and any Bottom-layer desktop widgets.
 // `exclusiveZone: 0` reserves no space, and an empty `mask` means every
 // click passes straight through to whatever is underneath. Nothing here is
 // interactive; it is only ever something you see.
@@ -73,7 +73,7 @@ Item {
         anchors { top: true; bottom: true; left: true; right: true }
 
         WlrLayershell.namespace: "wallpaper-blur"
-        WlrLayershell.layer: WlrLayer.Bottom
+        WlrLayershell.layer: WlrLayer.Background
         WlrLayershell.keyboardFocus: WlrKeyboardFocus.None
 
         exclusionMode: ExclusionMode.Normal
