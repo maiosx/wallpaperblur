@@ -1,31 +1,27 @@
 # Wallpaper Blur
-<img width="2560" height="1440" alt="Preview" src="Preview.png" />
 
-A blurred copy of your current wallpaper, drawn on Omarchy's desktop — above
-the real background, beneath every window and every other widget.
+A blurred copy of your current wallpaper, drawn on Omarchy's desktop — on the
+Background layer, under the real wallpaper and every other widget.
 
 | | |
 |---|---|
 | **Plugin id** | `wallpaper.blur` |
 | **Requires** | Omarchy 4 (the Quickshell shell) |
-| **Where** | Every screen, the Bottom layer, click-through |
+| **Where** | Every screen, the Background layer, click-through |
+| **Bar** | Letter **B** icon (right section by default) — click to toggle |
 | **Network** | None |
 
 ## Install
 
 ```bash
-omarchy plugin add https://github.com/maiosx/wallpaperblur.git
+omarchy plugin add https://github.com/YOUR_USERNAME/omarchy-wallpaper-blur.git
 omarchy plugin enable wallpaper.blur
 ```
+
 Or let the install script do both and restart the shell for you:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/maiosx/wallpaperblur/main/install | bash -s -- --yes
-```
-Suggested keybind in `~/.config/hypr/bindings.lua`:
-
-```lua
-o.bind("SUPER + B", "wallpaper.blur", "omarchy-shell wallpaper.blur toggle")
+curl -fsSL https://raw.githubusercontent.com/YOUR_USERNAME/omarchy-wallpaper-blur/main/install | bash -s -- --yes
 ```
 
 > **`omarchy plugin add` does not upgrade.** It refuses when the plugin is
@@ -60,6 +56,25 @@ omarchy plugin disable wallpaper.blur   # off, nothing removed
 omarchy plugin remove wallpaper.blur    # gone
 ```
 
+## Toggle from the bar
+
+The plugin ships a bar widget that shows the letter **B**.
+
+- Left-click → toggle the blurred underlay on/off
+- The letter dims when the blur is off
+
+It is added to the right section when you enable the plugin. You can move it
+with `omarchy bar move wallpaper.blur --section left` (or center/right).
+
+From a keybind or script:
+
+```bash
+omarchy-shell wallpaper.blur toggle
+omarchy-shell wallpaper.blur enable
+omarchy-shell wallpaper.blur disable
+omarchy-shell wallpaper.blur getEnabled
+```
+
 ## Tuning the blur
 
 Two properties at the top of `Surface.qml`:
@@ -83,7 +98,7 @@ changes without needing an IPC hook into the shell.
 
 ## How it behaves on the desktop
 
-Same contract as omarchy-widgets: layer-shell on `WlrLayer.Bottom`, an empty
+Layer-shell on `WlrLayer.Background` (one step below Bottom), an empty
 input mask (nothing here ever takes a click), `exclusiveZone: 0` so it
 reserves no space. It is only ever something you see.
 

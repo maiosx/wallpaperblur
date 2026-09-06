@@ -12,6 +12,8 @@ import Quickshell.Wayland
 // `exclusiveZone: 0` reserves no space, and an empty `mask` means every
 // click passes straight through to whatever is underneath. Nothing here is
 // interactive; it is only ever something you see.
+//
+// Toggle on/off from the bar "B" widget (or via IPC: wallpaper.blur toggle).
 Item {
   id: root
 
@@ -25,6 +27,9 @@ Item {
   // Edit these two to taste.
   property real blurAmount: 0.7
   property int blurRadiusPx: 96
+
+  // Runtime on/off. The bar "B" widget and IPC flip this.
+  property bool blurEnabled: true
 
   // Omarchy has relocated this symlink before (config/ moved to
   // local/state/ at some point), so this resolves whichever one exists
@@ -58,6 +63,27 @@ Item {
     onTriggered: resolver.running = true
   }
 
+  // IPC so the bar widget (and keybinds) can toggle without sharing objects.
+  IpcHandler {
+    target: "wallpaper.blur"
+
+    function toggle(): void {
+      root.blurEnabled = !root.blurEnabled
+    }
+
+    function enable(): void {
+      root.blurEnabled = true
+    }
+
+    function disable(): void {
+      root.blurEnabled = false
+    }
+
+    function getEnabled(): bool {
+      return root.blurEnabled
+    }
+  }
+
   Variants {
     model: Quickshell.screens
 
@@ -67,7 +93,7 @@ Item {
         required property var modelData
 
         screen: modelData
-        visible: root.wallpaperPath.length > 0
+        visible: root.blurEnabled && root.wallpaperPath.length > 0
         color: "transparent"
 
         anchors { top: true; bottom: true; left: true; right: true }

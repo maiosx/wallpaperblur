@@ -2,15 +2,22 @@
   "schemaVersion": 1,
   "id": "wallpaper.blur",
   "name": "Wallpaper Blur",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "",
   "license": "MIT",
-  "description": "A blurred copy of the current wallpaper, drawn above the real background and beneath every window and widget.",
-  "repository": "https://github.com/maiosx/wallpaperblur",
+  "description": "A blurred copy of the current wallpaper, drawn on the Background layer under the real wallpaper and every other widget. Toggle with the bar B icon.",
+  "repository": "https://github.com/YOUR_USERNAME/omarchy-wallpaper-blur",
   "keywords": ["wallpaper", "blur", "desktop", "quickshell"],
-  "kinds": ["panel"],
+  "kinds": ["panel", "bar-widget"],
   "keepLoaded": true,
   "entryPoints": {
-    "panel": "Surface.qml"
+    "panel": "Surface.qml",
+    "barWidget": "BarWidget.qml"
+  },
+  "barWidget": {
+    "displayName": "Wallpaper Blur",
+    "category": "Desktop",
+    "allowMultiple": false,
+    "defaultSection": "right"
   }
 }
