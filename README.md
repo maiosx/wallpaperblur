@@ -1,4 +1,5 @@
 # Wallpaper Blur
+<img width="2560" height="1440" alt="Preview" src="Preview.png" />
 
 A blurred copy of your current wallpaper, drawn on Omarchy's desktop — above
 the real background, beneath every window and every other widget.
