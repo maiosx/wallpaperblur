@@ -16,16 +16,15 @@ the real background, beneath every window and every other widget.
 omarchy plugin add https://github.com/maiosx/wallpaperblur.git
 omarchy plugin enable wallpaper.blur
 ```
-Suggested keybind in `~/.config/hypr/bindings.lua`:
-
-```lua
-o.bind("SUPER + B", "wallpaper.blur", "omarchy-shell wallpaper.blur toggle")
-```
-
 Or let the install script do both and restart the shell for you:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/maiosx/wallpaperblur/main/install | bash -s -- --yes
+```
+Suggested keybind in `~/.config/hypr/bindings.lua`:
+
+```lua
+o.bind("SUPER + B", "wallpaper.blur", "omarchy-shell wallpaper.blur toggle")
 ```
 
 > **`omarchy plugin add` does not upgrade.** It refuses when the plugin is
