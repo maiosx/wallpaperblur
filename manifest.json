@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "id": "wallpaper.blur",
+  "name": "Wallpaper Blur",
+  "version": "0.1.0",
+  "author": "",
+  "license": "MIT",
+  "description": "A blurred copy of the current wallpaper, drawn above the real background and beneath every window and widget.",
+  "repository": "https://github.com/YOUR_USERNAME/omarchy-wallpaper-blur",
+  "keywords": ["wallpaper", "blur", "desktop", "quickshell"],
+  "kinds": ["panel"],
+  "keepLoaded": true,
+  "entryPoints": {
+    "panel": "Surface.qml"
+  }
+}
