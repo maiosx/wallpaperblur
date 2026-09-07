@@ -50,7 +50,7 @@ Item {
   Rectangle {
     anchors.fill: parent
     radius: 6
-    color: root.blurOn ? (bar && bar.accent ? bar.accent : "#6c9ef8") : "transparent"
+    color: root.blurOn ? (bar && bar.accent ? bar.accent : "transparent") : "transparent"
     opacity: root.blurOn ? 0.22 : 0
     Behavior on opacity { NumberAnimation { duration: 120 } }
   }
