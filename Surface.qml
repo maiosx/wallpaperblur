@@ -31,26 +31,25 @@ Item {
   // Runtime on/off. The bar "B" widget and IPC flip this.
   property bool blurEnabled: true
 
-  // Omarchy has relocated this symlink before (config/ moved to
-  // local/state/ at some point), so this resolves whichever one exists
-  // rather than betting on one path. `readlink -f` also follows it through
-  // to the real image file Image{} needs.
+  // Follow the image owned by the active swaybg first. Another wallpaper
+  // plugin may use either Omarchy symlink, and those links can disagree.
+  // The symlinks remain a fallback for setups without a running swaybg.
   property string wallpaperPath: ""
 
   Process {
     id: resolver
     command: ["bash", "-c",
-      "for p in \"$HOME/.local/state/omarchy/current/background\" " +
-      "\"$HOME/.config/omarchy/current/background\"; do " +
-      "[ -e \"$p\" ] && readlink -f \"$p\" && exit 0; done; " +
       "for cmdline in /proc/[0-9]*/cmdline; do " +
       "[[ -r \"$cmdline\" ]] || continue; " +
       "mapfile -d '' -t args < \"$cmdline\" 2>/dev/null || true; " +
       "[[ \"${args[0]##*/}\" == swaybg ]] || continue; " +
       "for ((i=1; i<${#args[@]}; i++)); do " +
       "case \"${args[i]}\" in -i|--image) p=\"${args[i+1]}\"; " +
-      "[[ -f \"$p\" ]] && printf '%s\\n' \"$p\" && exit 0 ;; esac; " +
-      "done; done"]
+      "[[ -f \"$p\" ]] && readlink -f \"$p\" && exit 0 ;; esac; " +
+      "done; done; " +
+      "for p in \"$HOME/.local/state/omarchy/current/background\" " +
+      "\"$HOME/.config/omarchy/current/background\"; do " +
+      "[ -e \"$p\" ] && readlink -f \"$p\" && exit 0; done"]
     stdout: SplitParser {
       onRead: data => {
         const p = data.trim()
