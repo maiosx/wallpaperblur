@@ -96,8 +96,9 @@ copy directly.
 
 ## How it finds the wallpaper
 
-The plugin first follows the image passed to a running `swaybg` process. This
-keeps it in sync with other wallpaper plugins even when Omarchy's two possible
+The plugin follows the image and scaling mode passed to a running `swaybg`
+process. `fill`, `fit`, and `stretch` are mirrored by the blurred renderer,
+keeping it in sync with other wallpaper plugins even when Omarchy's two possible
 "current wallpaper" symlinks disagree. Without a running `swaybg`, it falls
 back to `~/.local/state/omarchy/current/background` and then
 `~/.config/omarchy/current/background`. It polls every 2 seconds so it follows

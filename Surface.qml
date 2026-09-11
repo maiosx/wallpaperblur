@@ -35,6 +35,7 @@ Item {
   // plugin may use either Omarchy symlink, and those links can disagree.
   // The symlinks remain a fallback for setups without a running swaybg.
   property string wallpaperPath: ""
+  property string wallpaperMode: "fill"
 
   Process {
     id: resolver
@@ -43,17 +44,25 @@ Item {
       "[[ -r \"$cmdline\" ]] || continue; " +
       "mapfile -d '' -t args < \"$cmdline\" 2>/dev/null || true; " +
       "[[ \"${args[0]##*/}\" == swaybg ]] || continue; " +
-      "for ((i=1; i<${#args[@]}; i++)); do " +
-      "case \"${args[i]}\" in -i|--image) p=\"${args[i+1]}\"; " +
-      "[[ -f \"$p\" ]] && readlink -f \"$p\" && exit 0 ;; esac; " +
-      "done; done; " +
+      "p=; m=; for ((i=1; i<${#args[@]}; i++)); do " +
+      "case \"${args[i]}\" in " +
+      "-i|--image) p=\"${args[i+1]}\" ;; " +
+      "-m|--mode) m=\"${args[i+1]}\" ;; " +
+      "esac; done; " +
+      "if [[ -f \"$p\" ]]; then " +
+      "case \"$m\" in fill|fit|stretch) ;; *) m=fill ;; esac; " +
+      "printf '%s|%s\\n' \"$(readlink -f \"$p\")\" \"$m\"; exit 0; fi; " +
+      "done; " +
       "for p in \"$HOME/.local/state/omarchy/current/background\" " +
       "\"$HOME/.config/omarchy/current/background\"; do " +
-      "[ -e \"$p\" ] && readlink -f \"$p\" && exit 0; done"]
+      "if [[ -e \"$p\" ]]; then printf '%s|fill\\n' \"$(readlink -f \"$p\")\"; exit 0; fi; done"]
     stdout: SplitParser {
       onRead: data => {
-        const p = data.trim()
+        const parts = data.trim().split("|")
+        const p = parts[0]
+        const m = parts[1] || "fill"
         if (p.length > 0 && p !== root.wallpaperPath) root.wallpaperPath = p
+        if (m !== root.wallpaperMode) root.wallpaperMode = m
       }
     }
   }
@@ -119,7 +128,11 @@ Item {
           id: source
           anchors.fill: parent
           source: root.wallpaperPath ? "file://" + root.wallpaperPath : ""
-          fillMode: Image.PreserveAspectCrop
+          fillMode: root.wallpaperMode === "fit"
+                    ? Image.PreserveAspectFit
+                    : root.wallpaperMode === "stretch"
+                      ? Image.Stretch
+                      : Image.PreserveAspectCrop
           asynchronous: true
           cache: false
           sourceSize.width: surface.width
