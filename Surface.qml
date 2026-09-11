@@ -42,7 +42,15 @@ Item {
     command: ["bash", "-c",
       "for p in \"$HOME/.local/state/omarchy/current/background\" " +
       "\"$HOME/.config/omarchy/current/background\"; do " +
-      "[ -e \"$p\" ] && readlink -f \"$p\" && exit 0; done"]
+      "[ -e \"$p\" ] && readlink -f \"$p\" && exit 0; done; " +
+      "for cmdline in /proc/[0-9]*/cmdline; do " +
+      "[[ -r \"$cmdline\" ]] || continue; " +
+      "mapfile -d '' -t args < \"$cmdline\" 2>/dev/null || true; " +
+      "[[ \"${args[0]##*/}\" == swaybg ]] || continue; " +
+      "for ((i=1; i<${#args[@]}; i++)); do " +
+      "case \"${args[i]}\" in -i|--image) p=\"${args[i+1]}\"; " +
+      "[[ -f \"$p\" ]] && printf '%s\\n' \"$p\" && exit 0 ;; esac; " +
+      "done; done"]
     stdout: SplitParser {
       onRead: data => {
         const p = data.trim()

@@ -99,8 +99,9 @@ copy directly.
 Omarchy has relocated the "current wallpaper" symlink before — from
 `~/.config/omarchy/current/background` to
 `~/.local/state/omarchy/current/background`. The plugin checks both and uses
-whichever exists, polling every 2 seconds so it follows theme and wallpaper
-changes without needing an IPC hook into the shell.
+whichever exists. When neither link is available, it falls back to the image
+passed to a running `swaybg` process. It polls every 2 seconds so it follows
+theme and wallpaper changes without needing an IPC hook into the shell.
 
 ## How it behaves on the desktop
 

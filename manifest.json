@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "wallpaper.blur",
   "name": "Wallpaper Blur",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "author": "maiosx",
   "license": "MIT",
   "description": "A blurred copy of the current wallpaper, drawn on the Background layer under the real wallpaper and every other widget. Toggle with the bar B icon.",
